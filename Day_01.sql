@@ -55,17 +55,10 @@ having count(o.OrderID) > 50;
 
 
 --10 Find the average order value for each customer.
-SELECT 
-    c.CustomerID,
-    c.FirstName,
-    AVG(OrderTotal) AS AvgOrderValue
-FROM Customers c
+SELECT c.CustomerID, c.FirstName, AVG(OrderTotal) AS AvgOrderValue FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
 JOIN (
-    SELECT 
-        OrderID,
-        SUM(Quantity * UnitPrice) AS OrderTotal
-    FROM OrderItems
-    GROUP BY OrderID
+SELECT OrderID, SUM(Quantity * UnitPrice) AS OrderTotal FROM OrderItems
+GROUP BY OrderID
 ) ot ON o.OrderID = ot.OrderID
 GROUP BY c.CustomerID, c.FirstName;
